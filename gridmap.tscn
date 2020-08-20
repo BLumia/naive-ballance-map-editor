@@ -1,7 +1,27 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://twilight_2.meshlib" type="MeshLibrary" id=1]
 [ext_resource path="res://Scripts/gridmap.gd" type="Script" id=2]
+
+[sub_resource type="BoxShape" id=6]
+extents = Vector3( 50, 1, 50 )
+
+[sub_resource type="CubeMesh" id=3]
+size = Vector3( 5, 5, 5 )
+
+[sub_resource type="Shader" id=4]
+code = "shader_type spatial;
+
+uniform vec4 current_color : hint_color;
+
+void fragment() {
+	ALBEDO = current_color.rgb;
+	ALPHA = 0.5;
+}"
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
+shader_param/current_color = null
 
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 2 )
@@ -16,3 +36,23 @@ data = {
 __meta__ = {
 "_editor_clip_": 0
 }
+
+[node name="LookAtPoint" type="Spatial" parent="."]
+
+[node name="Camera" type="Camera" parent="LookAtPoint"]
+transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 30, 10 )
+
+[node name="CurrentSurface" type="Area" parent="LookAtPoint"]
+
+[node name="CollisionShape" type="CollisionShape" parent="LookAtPoint/CurrentSurface"]
+shape = SubResource( 6 )
+
+[node name="SelectionTool" type="Spatial" parent="."]
+
+[node name="RayCast" type="RayCast" parent="SelectionTool"]
+enabled = true
+collide_with_areas = true
+
+[node name="CursorAt" type="MeshInstance" parent="SelectionTool"]
+mesh = SubResource( 3 )
+material/0 = SubResource( 5 )
