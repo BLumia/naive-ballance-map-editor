@@ -1,13 +1,14 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://twilight_2.meshlib" type="MeshLibrary" id=1]
+[ext_resource path="res://twilight_3.meshlib" type="MeshLibrary" id=1]
 [ext_resource path="res://Scripts/gridmap.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/UI_FileTab.gd" type="Script" id=3]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 50, 1, 50 )
 
 [sub_resource type="CubeMesh" id=2]
-size = Vector3( 5, 5, 5 )
+size = Vector3( 2.5, 5, 2.5 )
 
 [sub_resource type="Shader" id=3]
 code = "shader_type spatial;
@@ -28,10 +29,12 @@ script = ExtResource( 2 )
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource( 1 )
-cell_size = Vector3( 5, 5, 5 )
+cell_size = Vector3( 2.5, 5, 2.5 )
 cell_octant_size = 10
+cell_center_x = false
+cell_center_z = false
 data = {
-"cells": PoolIntArray( 0, 0, 7, 1, 0, 1048579, 2, 0, 2, 3, 0, 536870914, 4, 0, 536870913, 65530, 0, -1609170943, 65531, 0, 2, 65532, 0, -1610612734, 65533, 0, 1441795, 65534, 0, 536870919, 65535, 0, 7, 0, 65530, 7, 1, 65530, 7, 2, 65530, -1610612729, 3, 65530, 537919491, 4, 65530, -1609564159, 65530, 65530, 655361, 65531, 65530, 1441795, 65532, 65530, 7, 65533, 65530, 7, 65534, 65530, 536870919, 65535, 65530, 7, 0, 65531, 10, 3, 65531, 536870921, 4, 65531, 1441794, 65530, 65531, 538312706, 65531, 65531, 536870920, 65532, 65531, 8, 65533, 65531, 536870920, 65535, 65531, 536870922, 0, 65532, 536870922, 3, 65532, 9, 4, 65532, 538312706, 65530, 65532, 1441794, 65531, 65532, -1610612728, 0, 65533, 536870922, 3, 65533, -1610612727, 4, 65533, 538312706, 65530, 65533, 1441794, 65531, 65533, 8, 65532, 65533, 8, 65533, 65533, 8, 0, 65534, 536870922, 4, 65534, -1609170942, 65530, 65534, -1609170942, 65531, 65534, -1610612728, 65533, 65534, 8, 0, 65535, 10, 1, 65535, 536870922, 3, 65535, 9, 4, 65535, 1441794, 65530, 65535, 1441794, 65531, 65535, 8, 65532, 65535, 8, 65533, 65535, 8, 65535, 65535, 10 )
+"cells": PoolIntArray( 3, 0, 1074790401, 5, 0, 1073741836, 65529, 0, 1441804, 0, 65527, 1074397198, 2, 65527, 655374, 3, 65527, 1075183617, 5, 65527, 1048588, 65529, 65527, 1074397196, 65532, 65527, 655374, 65534, 65527, 655374, 3, 65528, 1048577, 0, 65530, 1441793, 1, 65530, 1075183617, 2, 65530, 1441794, 5, 65530, 1048590, 65530, 65530, 1074790414, 65532, 65530, 2, 65533, 65530, 1441793, 65534, 65530, 1441793, 65535, 65530, 1075183617, 0, 65531, 1073741831, 2, 65531, 655361, 65532, 65531, 1, 65535, 65531, 655363, 2, 65532, 1074397185, 5, 65532, 1074790414, 65530, 65532, 1048590, 65532, 65532, 1, 65534, 65532, 1074397194, 65535, 65532, 655363, 0, 65533, 1074790401, 1, 65533, 1074790401, 2, 65533, 655362, 65532, 65533, 1074790402, 65533, 65533, 1074790401, 65534, 65533, 1048577, 65535, 65533, 1048577, 5, 65534, 1074790414, 65530, 65534, 1048590, 0, 65535, 655374, 2, 65535, 1074397198, 3, 65535, 1441793, 65532, 65535, 1074397198, 65534, 65535, 655374 )
 }
 __meta__ = {
 "_editor_clip_": 0
@@ -56,3 +59,92 @@ collide_with_areas = true
 [node name="CursorAt" type="MeshInstance" parent="SelectionTool"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 4 )
+
+[node name="UI" type="CanvasLayer" parent="."]
+follow_viewport_enable = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="UI/VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 0, 80 )
+tab_align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="File" type="Tabs" parent="UI/VBoxContainer/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+script = ExtResource( 3 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/VBoxContainer/TabContainer/File"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LoadButton" type="ToolButton" parent="UI/VBoxContainer/TabContainer/File/HBoxContainer"]
+margin_right = 42.0
+margin_bottom = 44.0
+text = "Load"
+flat = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SaveButton" type="ToolButton" parent="UI/VBoxContainer/TabContainer/File/HBoxContainer"]
+margin_left = 46.0
+margin_right = 87.0
+margin_bottom = 44.0
+text = "Save"
+flat = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="2x2 Road blocks" type="Tabs" parent="UI/VBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="GridContainer" type="GridContainer" parent="UI/VBoxContainer/TabContainer/2x2 Road blocks"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1x1 Road blocks" type="Tabs" parent="UI/VBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+
+[node name="GridContainer" type="GridContainer" parent="UI/VBoxContainer/TabContainer/1x1 Road blocks"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/File/HBoxContainer/LoadButton" to="UI/VBoxContainer/TabContainer/File" method="_on_LoadButton_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/File/HBoxContainer/SaveButton" to="UI/VBoxContainer/TabContainer/File" method="_on_SaveButton_pressed"]
