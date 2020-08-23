@@ -3,8 +3,10 @@ extends Spatial
 onready var ray = $SelectionTool/RayCast
 onready var gridmap_node = $GridMap
 onready var cursor_object = $SelectionTool/CursorAt
+onready var lookat_point = $LookAtPoint
 
 var ray_length = 2000
+var grid_size = 2.5
 export var current_hold_block = 9
 
 func debug(meshlib: MeshLibrary):
@@ -52,6 +54,15 @@ func _physics_process(_delta):
 			current_hold_block = tile[0]
 	if Input.is_action_just_pressed("RMB_click"):
 		gridmap_node.set_cell_item(tile[1].x, tile[1].y, tile[1].z, GridMap.INVALID_CELL_ITEM)
+		
+	if Input.is_action_just_pressed("ui_left"):
+		lookat_point.translate(Vector3(-grid_size, 0, 0))
+	if Input.is_action_just_pressed("ui_right"):
+		lookat_point.translate(Vector3(grid_size, 0, 0))
+	if Input.is_action_just_pressed("ui_up"):
+		lookat_point.translate(Vector3(0, 0, -grid_size))
+	if Input.is_action_just_pressed("ui_down"):
+		lookat_point.translate(Vector3(0, 0, grid_size))
 
 
 # Return if the given grid contains (covered) the given point
