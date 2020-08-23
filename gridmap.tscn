@@ -53,7 +53,7 @@ cell_octant_size = 10
 cell_center_x = false
 cell_center_z = false
 data = {
-"cells": PoolIntArray( 2, 65527, 1073741831, 5, 65527, 1441800, 8, 65527, 1075183629, 6, 65528, 1074790403, 8, 65528, 1074397197, 2, 65529, 1073741827, 1, 65531, 1075183618, 2, 65531, 1073741834, 65528, 65531, -1610612735, 65530, 65531, 1073741833, 65533, 65531, -1072300030, 65534, 65531, 1073741830, 65528, 65533, 1073741826, 65528, 65535, 537919501, 65529, 65535, -1609957363 )
+"cells": PoolIntArray( 2, 65527, 7, 5, 65527, -2146041848, 8, 65527, 1075183629, 6, 65528, 1074790403, 8, 65528, 1074397197, 2, 65529, 1073741827, 1, 65531, 1441794, 2, 65531, 1073741834, 65528, 65531, 1, 65530, 65531, -1610612727, 65533, 65531, 538312706, 65534, 65531, -1610612730, 65528, 65533, 2, 65528, 65535, 1074790413, 65529, 65535, 655373 )
 }
 __meta__ = {
 "_editor_clip_": 0
@@ -101,7 +101,6 @@ __meta__ = {
 }
 
 [node name="File" type="Tabs" parent="UI/VBoxContainer/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -244,6 +243,7 @@ texture_normal = ExtResource( 11 )
 expand = true
 
 [node name="1x1 Road blocks" type="Tabs" parent="UI/VBoxContainer/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
