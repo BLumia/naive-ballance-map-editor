@@ -5,7 +5,7 @@ onready var gridmap_node = $GridMap
 onready var cursor_object = $SelectionTool/CursorAt
 
 var ray_length = 2000
-var current_hold_block = 9
+export var current_hold_block = 9
 
 func debug(meshlib: MeshLibrary):
 	gridmap_node.clear()
@@ -38,9 +38,9 @@ func _physics_process(_delta):
 	
 	var point = gridmap_node.world_to_map(ray.get_collision_point())
 	var tile = get_tile_at(point)
-	print(tile)
-	if tile[0] != GridMap.INVALID_CELL_ITEM:
-		print(gridmap_node.get_cell_item_orientation(tile[1].x, tile[1].y, tile[1].z))
+	#print(tile)
+	#if tile[0] != GridMap.INVALID_CELL_ITEM:
+	#	print(gridmap_node.get_cell_item_orientation(tile[1].x, tile[1].y, tile[1].z))
 	
 	var selection_pos = gridmap_node.map_to_world(point.x, point.y, point.z)
 	cursor_object.translation = selection_pos
@@ -120,3 +120,4 @@ func get_tile_at(point: Vector3):
 	if ntile != GridMap.INVALID_CELL_ITEM:
 		return [ntile, point + Vector3(1, 0, 1)]
 	return [GridMap.INVALID_CELL_ITEM, point]
+

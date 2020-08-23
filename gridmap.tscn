@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://twilight_4.meshlib" type="MeshLibrary" id=1]
 [ext_resource path="res://Scripts/gridmap.gd" type="Script" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://Models/1x1-tiles/SmallFlatTurnIn.png" type="Texture" id=19]
 [ext_resource path="res://Models/1x1-tiles/SmallSunkenTurnIn.png" type="Texture" id=20]
 [ext_resource path="res://Models/1x1-tiles/SmallFlatBorderless.png" type="Texture" id=21]
+[ext_resource path="res://Scripts/UI_2x2BlockTab.gd" type="Script" id=22]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 50, 1, 50 )
@@ -100,6 +101,7 @@ __meta__ = {
 }
 
 [node name="File" type="Tabs" parent="UI/VBoxContainer/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -142,6 +144,7 @@ margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
+script = ExtResource( 22 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/VBoxContainer/TabContainer/2x2 Road blocks"]
 anchor_right = 1.0
@@ -241,7 +244,6 @@ texture_normal = ExtResource( 11 )
 expand = true
 
 [node name="1x1 Road blocks" type="Tabs" parent="UI/VBoxContainer/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -258,7 +260,7 @@ __meta__ = {
 
 [node name="SmallBorderTurn" type="TextureButton" parent="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer"]
 margin_right = 44.0
-margin_bottom = 48.0
+margin_bottom = 44.0
 rect_min_size = Vector2( 44, 44 )
 texture_normal = ExtResource( 15 )
 expand = true
@@ -266,7 +268,7 @@ expand = true
 [node name="SmallFlatBorder" type="TextureButton" parent="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer"]
 margin_left = 48.0
 margin_right = 92.0
-margin_bottom = 48.0
+margin_bottom = 44.0
 rect_min_size = Vector2( 44, 44 )
 texture_normal = ExtResource( 16 )
 expand = true
@@ -277,7 +279,7 @@ __meta__ = {
 [node name="SmallFlatTurnIn" type="TextureButton" parent="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer"]
 margin_left = 96.0
 margin_right = 140.0
-margin_bottom = 48.0
+margin_bottom = 44.0
 rect_min_size = Vector2( 44, 44 )
 texture_normal = ExtResource( 19 )
 expand = true
@@ -285,7 +287,7 @@ expand = true
 [node name="SmallSunkenTurnOut" type="TextureButton" parent="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer"]
 margin_left = 144.0
 margin_right = 188.0
-margin_bottom = 48.0
+margin_bottom = 44.0
 rect_min_size = Vector2( 44, 44 )
 texture_normal = ExtResource( 17 )
 expand = true
@@ -293,7 +295,7 @@ expand = true
 [node name="SmallSunkenFloor" type="TextureButton" parent="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer"]
 margin_left = 192.0
 margin_right = 236.0
-margin_bottom = 48.0
+margin_bottom = 44.0
 rect_min_size = Vector2( 44, 44 )
 texture_normal = ExtResource( 18 )
 expand = true
@@ -301,7 +303,7 @@ expand = true
 [node name="SmallSunkenTurnIn" type="TextureButton" parent="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer"]
 margin_left = 240.0
 margin_right = 284.0
-margin_bottom = 48.0
+margin_bottom = 44.0
 rect_min_size = Vector2( 44, 44 )
 texture_normal = ExtResource( 20 )
 expand = true
@@ -309,9 +311,27 @@ expand = true
 [node name="SmallFlatBorderless" type="TextureButton" parent="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer"]
 margin_left = 288.0
 margin_right = 332.0
-margin_bottom = 48.0
+margin_bottom = 44.0
 rect_min_size = Vector2( 44, 44 )
 texture_normal = ExtResource( 21 )
 expand = true
 [connection signal="pressed" from="UI/VBoxContainer/TabContainer/File/HBoxContainer/LoadButton" to="UI/VBoxContainer/TabContainer/File" method="_on_LoadButton_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/TabContainer/File/HBoxContainer/SaveButton" to="UI/VBoxContainer/TabContainer/File" method="_on_SaveButton_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/2x2 Road blocks/HBoxContainer/Wood" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "2x2_WoodTrafo" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/2x2 Road blocks/HBoxContainer/Stone" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "2x2_StoneTrafo" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/2x2 Road blocks/HBoxContainer/Paper" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "2x2_PaperTrafo" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/2x2 Road blocks/HBoxContainer/Floor_Top_Flat" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "2x2_Floor_Top_Flat" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/2x2 Road blocks/HBoxContainer/Floor_Top_ProfilFlat" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "2x2_Floor_Top_ProfilFlat" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/2x2 Road blocks/HBoxContainer/Floor_Top_Profil" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "2x2_Floor_Top_Profil" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/2x2 Road blocks/HBoxContainer/NormalFlatTurn" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "2x2_NormalFlatTurn" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/2x2 Road blocks/HBoxContainer/NormalSunkenTurn" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "2x2_NormalSunkenTurn" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/2x2 Road blocks/HBoxContainer/Floor_Top_Border" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "2x2_Floor_Top_Border" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/2x2 Road blocks/HBoxContainer/Floor_Top_Borderless" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "2x2_Floor_Top_Borderless" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/2x2 Road blocks/HBoxContainer/NormalBorderTurn" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "2x2_NormalBorderTurn" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer/SmallBorderTurn" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "1x1_SmallBorderTurn" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer/SmallFlatBorder" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "1x1_SmallFlatBorder" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer/SmallFlatTurnIn" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "1x1_SmallFlatTurnIn" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer/SmallSunkenTurnOut" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "1x1_SmallSunkenTurnOut" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer/SmallSunkenFloor" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "2x2_SmallSunkenFloor" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer/SmallSunkenTurnIn" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "1x1_SmallSunkenTurnIn" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer/SmallFlatBorderless" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "1x1_SmallFlatBorderless" ]]
