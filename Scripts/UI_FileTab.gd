@@ -6,6 +6,8 @@ onready var uiRoot = $"/root/Spatial/UI"
 onready var loadDlg = FileDialog.new()
 onready var saveDlg = FileDialog.new()
 
+const LevelData = preload("res://Scripts/LevelData.gd")
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,3 +39,6 @@ func _on_SaveButton_DialogConfirmed(path: String):
 
 func _on_LoadButton_DialogConfirmed(path: String):
 	print(path)
+	var levelData = LevelData.new()
+	var succ = levelData.parse_from_bme_file(path)
+	print(succ)
