@@ -15,12 +15,14 @@ func _ready():
 	loadDlg.popup_exclusive = true
 	loadDlg.access = FileDialog.ACCESS_FILESYSTEM
 	loadDlg.mode = FileDialog.MODE_OPEN_FILE
+	loadDlg.set_filters(PoolStringArray(["*.bme ; Jxpxxzj Ballance Map Editor format"]))
 	uiRoot.call_deferred("add_child", loadDlg)
 	loadDlg.connect("file_selected", self, "_on_LoadButton_DialogConfirmed")
 
 	saveDlg.resizable = true
 	saveDlg.popup_exclusive = true
 	saveDlg.access = FileDialog.ACCESS_FILESYSTEM
+	saveDlg.set_filters(PoolStringArray(["*.bme ; Jxpxxzj Ballance Map Editor format"]))
 	uiRoot.call_deferred("add_child", saveDlg)
 	saveDlg.connect("file_selected", self, "_on_SaveButton_DialogConfirmed")
 

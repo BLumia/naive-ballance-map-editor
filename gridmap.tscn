@@ -129,6 +129,7 @@ __meta__ = {
 margin_left = 46.0
 margin_right = 87.0
 margin_bottom = 44.0
+disabled = true
 text = "Save"
 flat = false
 __meta__ = {

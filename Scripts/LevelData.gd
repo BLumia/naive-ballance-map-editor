@@ -179,6 +179,12 @@ func bme_grid_to_gridmap_grid(layer: int, block: Dictionary):
 	}
 
 
+func gridmap_grid_to_bme_grid(block: Dictionary):
+	return {
+		# TODO
+	}
+
+
 func set_gridmap_from_level_data(gridmap: GridMap):
 	gridmap.clear()
 	
