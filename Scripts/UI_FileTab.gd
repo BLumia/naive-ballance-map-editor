@@ -42,3 +42,4 @@ func _on_LoadButton_DialogConfirmed(path: String):
 	var levelData = LevelData.new()
 	var succ = levelData.parse_from_bme_file(path)
 	print(succ)
+	levelData.set_gridmap_from_level_data(gridmap_node)
