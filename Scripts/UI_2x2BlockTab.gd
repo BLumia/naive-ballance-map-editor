@@ -1,26 +1,7 @@
 extends Tabs
 
 onready var rootNode = $"/root/Spatial"
-var TileNameMap = {
-	"2x2_WoodTrafo": 10,
-	"2x2_StoneTrafo": 9,
-	"2x2_PaperTrafo": 6,
-	"2x2_Floor_Top_Flat": 2,
-	"2x2_Floor_Top_ProfilFlat": 3,
-	"2x2_Floor_Top_Profil": 8,
-	"2x2_NormalFlatTurn": 1,
-	"2x2_NormalSunkenTurn": 7,
-	"2x2_Floor_Top_Border": 5,
-	"2x2_Floor_Top_Borderless": 0,
-	"2x2_NormalBorderTurn": 4,
-	"1x1_SmallBorderTurn": 13,
-	"1x1_SmallFlatBorder": 12,
-	"1x1_SmallFlatTurnIn": 11,
-	"1x1_SmallSunkenTurnOut": 17,
-	"1x1_SmallSunkenFloor": 16,
-	"1x1_SmallSunkenTurnIn": 15,
-	"1x1_SmallFlatBorderless": 14,
-}
+const LevelData = preload("res://Scripts/LevelData.gd")
 
 
 # Called when the node enters the scene tree for the first time.
@@ -38,7 +19,8 @@ func set_held_block_type(type: int):
 
 
 func set_current_block_by_name(tilename: String):
-	if TileNameMap.has(tilename):
+	var tile_id = LevelData.tilename_to_meshlib_id(tilename)
+	if tile_id != -1:
 		print(tilename)
-		set_held_block_type(TileNameMap[tilename])
+		set_held_block_type(tile_id)
 

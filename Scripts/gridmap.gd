@@ -11,10 +11,10 @@ export var current_hold_block = 9
 
 func debug(meshlib: MeshLibrary):
 	gridmap_node.clear()
-	gridmap_node.set_cell_item(0, 0, 0, 6, 0)
-	gridmap_node.set_cell_item(2, 0, 0, 7, 22)
-	gridmap_node.set_cell_item(4, 0, 0, 8, 10)
-	gridmap_node.set_cell_item(6, 0, 0, 9, 16)
+	gridmap_node.set_cell_item(0, 0, 0, 1, 0)
+	gridmap_node.set_cell_item(2, 0, 0, 1, 22)
+	gridmap_node.set_cell_item(4, 0, 0, 1, 10)
+	gridmap_node.set_cell_item(6, 0, 0, 1, 16)
 	#gridmap_node.set_cell_item(2, 0, -2, 14, 0)
 	#gridmap_node.set_cell_item(-1, 0, 1, 14, 0)
 

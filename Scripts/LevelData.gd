@@ -8,7 +8,7 @@ var meta_creator : String
 var layer_blocks = {} # layer : [ block data]
 var layer_props = {}
 var valid_regions = ["[Metadata]", "[Sign]", "[Layer]", "[Block]"]
-var bme_type_map = {
+var bme_typename_map = {
 	1: "2x2_PaperTrafo",
 	2: "2x2_StoneTrafo",
 	3: "2x2_WoodTrafo",
@@ -31,9 +31,49 @@ var bme_type_map = {
 	18: "1x1_SmallSunkenTurnOut",
 }
 
+const typename_meshlib_map = {
+	"2x2_WoodTrafo": 10,
+	"2x2_StoneTrafo": 9,
+	"2x2_PaperTrafo": 6,
+	"2x2_Floor_Top_Flat": 2,
+	"2x2_Floor_Top_ProfilFlat": 3,
+	"2x2_Floor_Top_Profil": 8,
+	"2x2_NormalFlatTurn": 1,
+	"2x2_NormalSunkenTurn": 7,
+	"2x2_Floor_Top_Border": 5,
+	"2x2_Floor_Top_Borderless": 0,
+	"2x2_NormalBorderTurn": 4,
+	"1x1_SmallBorderTurn": 13,
+	"1x1_SmallFlatBorder": 12,
+	"1x1_SmallFlatTurnIn": 11,
+	"1x1_SmallSunkenTurnOut": 17,
+	"1x1_SmallSunkenFloor": 16,
+	"1x1_SmallSunkenTurnIn": 15,
+	"1x1_SmallFlatBorderless": 14,
+}
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
+
+
+static func tilename_to_meshlib_id(name: String):
+	if typename_meshlib_map.has(name):
+		return typename_meshlib_map[name]
+	else:
+		return -1
+
+
+static func bme_rotation_to_gridmap_rotation(rot: int):
+	match rot:
+		0:
+			return 0
+		90:
+			return 22
+		180:
+			return 10
+		270:
+			return 16
 
 
 func parse_from_bme_file(filepath: String):
@@ -114,6 +154,31 @@ func export_to_bme_file(filepath: String):
 	pass
 
 
+func bme_grid_to_gridmap_grid(layer: int, block: Dictionary):
+	var grid_x = (block.x - 1) / 20
+	var grid_layer = layer
+	var grid_y = (block.y - 1) / 20
+	var rotation = bme_rotation_to_gridmap_rotation(block.rotation)
+	var block_name = bme_typename_map[block.type]
+	if block_name.begins_with("2x2"):
+		match block.rotation:
+			90:
+				grid_x += 1
+			180:
+				grid_x += 1
+				grid_y += 1
+			270:
+				grid_y += 1
+	var block_id = tilename_to_meshlib_id(block_name)
+	return {
+		"layer": layer,
+		"type": block_id,
+		"x": grid_x,
+		"y": grid_y,
+		"rotation": rotation
+	}
+
+
 func set_gridmap_from_level_data(gridmap: GridMap):
 	gridmap.clear()
 	
@@ -121,12 +186,9 @@ func set_gridmap_from_level_data(gridmap: GridMap):
 	# we actually don't care about layer_props...
 	for layer in layer_blocks:
 		for block in layer_blocks[layer]:
-			var grid_x = (block.x - 1) / 20 - canvas_offset
-			var grid_layer = layer
-			var grid_y = (block.y - 1) / 20 - canvas_offset
-			# TODO: rotation, type
-			gridmap.set_cell_item(grid_x, grid_layer, grid_y, 0)
-			print(String(grid_x) + " " + String(grid_y))
+			var blk = bme_grid_to_gridmap_grid(layer, block)
+			print(blk)
+			gridmap.set_cell_item(blk.x - canvas_offset, blk.layer, blk.y - canvas_offset, blk.type, blk.rotation)
 
 
 func set_level_data_from_gridmap():
