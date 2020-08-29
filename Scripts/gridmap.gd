@@ -13,6 +13,7 @@ var ray_length = 2000
 var grid_size = 2.5
 export var current_hold_block = 9
 export var current_block_rotation = 0
+var disable_non_ui_stuff = false
 
 func debug(meshlib: MeshLibrary):
 	gridmap_node.clear()
@@ -110,9 +111,23 @@ func _input(event):
 		lookat_point.translate(Vector3(0, 0, -grid_size))
 	if Input.is_action_pressed("ui_down"):
 		lookat_point.translate(Vector3(0, 0, grid_size))
+	if Input.is_action_just_pressed("lift_up"):
+		lookat_point.translate(Vector3(0, grid_size * 2, 0))
+	if Input.is_action_just_pressed("lift_down"):
+		lookat_point.translate(Vector3(0, -grid_size * 2, 0))
+	if Input.is_action_just_pressed("editor_pause"):
+		disable_non_ui_stuff = !disable_non_ui_stuff
 
 
 func _physics_process(_delta):
+	# workaround for the ui event process stuff..
+	# too lazy to find out the right way to deal with event process..
+	if disable_non_ui_stuff:
+		cursor_label.text = "= =||"
+		virtual_object.visible = false
+		cursor_object.visible = false
+		return
+	
 	var mouse_pos = get_viewport().get_mouse_position()
 	var from = get_viewport().get_camera().project_ray_origin(mouse_pos)
 	var to = get_viewport().get_camera().project_ray_normal(mouse_pos) * ray_length

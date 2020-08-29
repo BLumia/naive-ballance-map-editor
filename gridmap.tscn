@@ -53,7 +53,7 @@ cell_octant_size = 10
 cell_center_x = false
 cell_center_z = false
 data = {
-"cells": PoolIntArray( 2, 65527, 536870919, 5, 65527, 1441800, 8, 65527, 538312717, 6, 65528, 537919491, 8, 65528, 655373, 2, 65529, 3, 1, 65531, 538312706, 2, 65531, 536870922, 65528, 65531, 1, 65530, 65531, 536870921, 65533, 65531, 1441794, 65534, 65531, 6, 65528, 65533, 536870914, 65528, 65535, 1048589, 65529, 65535, 655373 )
+"cells": PoolIntArray( 2, 65527, 536870919, 5, 65527, 1441800, 8, 65527, 1441805, 6, 65528, 1048579, 8, 65528, 537526285, 2, 65529, 3, 1, 65531, 538312706, 2, 65531, 10, 65528, 65531, 1, 65530, 65531, 536870921, 65533, 65531, 538312706, 65534, 65531, 6, 65528, 65533, 2, 65528, 65535, 1048589, 65529, 65535, 655373 )
 }
 __meta__ = {
 "_editor_clip_": 0
@@ -103,7 +103,6 @@ __meta__ = {
 }
 
 [node name="File" type="Tabs" parent="UI/VBoxContainer/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -320,8 +319,8 @@ texture_normal = ExtResource( 21 )
 expand = true
 
 [node name="CursorDebugLabel" type="Label" parent="UI/VBoxContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_top = 84.0
+margin_right = 1024.0
 margin_bottom = 98.0
 text = "Cursor: (OwO)"
 align = 2

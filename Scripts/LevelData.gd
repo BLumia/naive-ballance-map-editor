@@ -305,6 +305,7 @@ func gridmap_grid_to_bme_grid(block: Dictionary):
 		"type": bme_blk_type,
 		"x": grid_x,
 		"y": grid_y,
+		"size": 0 if block_name.begins_with("2x2_") else 1,
 		"rotation": rotation
 	}
 
