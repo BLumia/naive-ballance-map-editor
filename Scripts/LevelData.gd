@@ -64,6 +64,7 @@ static func tilename_to_meshlib_id(name: String):
 		return -1
 
 
+# https://www.reddit.com/r/godot/comments/6y5gwa/gridmap_rotations_chart/
 static func bme_rotation_to_gridmap_rotation(rot: int):
 	match rot:
 		0:
@@ -74,6 +75,31 @@ static func bme_rotation_to_gridmap_rotation(rot: int):
 			return 10
 		270:
 			return 16
+
+
+static func gridmap_rotation_to_bme_rotation(rot: int):
+	match rot:
+		0:
+			return 0
+		22:
+			return 90
+		10:
+			return 180
+		16:
+			return 270
+
+
+# https://godotengine.org/qa/42431/how-to-get-rotation-item-of-gridmap
+static func gridmap_rotation_to_vector3(rot: int):
+	match rot:
+		0:
+			return Vector3(0, 0, 0)
+		22:
+			return Vector3(0, -PI/2, 0)
+		10:
+			return Vector3(0, PI, 0)
+		16:
+			return Vector3(0, PI/2, 0)
 
 
 func parse_from_bme_file(filepath: String):

@@ -27,7 +27,7 @@
 extents = Vector3( 50, 1, 50 )
 
 [sub_resource type="CubeMesh" id=2]
-size = Vector3( 2.5, 5, 2.5 )
+size = Vector3( 2.51, 5.1, 2.51 )
 
 [sub_resource type="Shader" id=3]
 code = "shader_type spatial;
@@ -53,7 +53,7 @@ cell_octant_size = 10
 cell_center_x = false
 cell_center_z = false
 data = {
-"cells": PoolIntArray( 2, 65527, 7, 5, 65527, 1075183624, 8, 65527, 1441805, 6, 65528, -1609564157, 8, 65528, 655373, 2, 65529, 3, 1, 65531, 1441794, 2, 65531, 10, 65528, 65531, 1073741825, 65530, 65531, 9, 65533, 65531, 1441794, 65534, 65531, 6, 65528, 65533, 2, 65528, 65535, 1048589, 65529, 65535, 655373 )
+"cells": PoolIntArray( 2, 65527, 536870919, 5, 65527, 1441800, 8, 65527, 538312717, 6, 65528, 537919491, 8, 65528, 655373, 2, 65529, 3, 1, 65531, 538312706, 2, 65531, 536870922, 65528, 65531, 1, 65530, 65531, 536870921, 65533, 65531, 1441794, 65534, 65531, 6, 65528, 65533, 536870914, 65528, 65535, 1048589, 65529, 65535, 655373 )
 }
 __meta__ = {
 "_editor_clip_": 0
@@ -78,6 +78,8 @@ collide_with_areas = true
 [node name="CursorAt" type="MeshInstance" parent="SelectionTool"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 4 )
+
+[node name="VirtualBlock" type="MeshInstance" parent="SelectionTool"]
 
 [node name="UI" type="CanvasLayer" parent="."]
 follow_viewport_enable = true
@@ -244,7 +246,6 @@ texture_normal = ExtResource( 11 )
 expand = true
 
 [node name="1x1 Road blocks" type="Tabs" parent="UI/VBoxContainer/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -316,6 +317,13 @@ margin_bottom = 44.0
 rect_min_size = Vector2( 44, 44 )
 texture_normal = ExtResource( 21 )
 expand = true
+
+[node name="CursorDebugLabel" type="Label" parent="UI/VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 98.0
+text = "Cursor: (OwO)"
+align = 2
 [connection signal="pressed" from="UI/VBoxContainer/TabContainer/File/HBoxContainer/LoadButton" to="UI/VBoxContainer/TabContainer/File" method="_on_LoadButton_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/TabContainer/File/HBoxContainer/SaveButton" to="UI/VBoxContainer/TabContainer/File" method="_on_SaveButton_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/TabContainer/2x2 Road blocks/HBoxContainer/Wood" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "2x2_WoodTrafo" ]]
@@ -333,6 +341,6 @@ expand = true
 [connection signal="pressed" from="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer/SmallFlatBorder" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "1x1_SmallFlatBorder" ]]
 [connection signal="pressed" from="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer/SmallFlatTurnIn" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "1x1_SmallFlatTurnIn" ]]
 [connection signal="pressed" from="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer/SmallSunkenTurnOut" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "1x1_SmallSunkenTurnOut" ]]
-[connection signal="pressed" from="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer/SmallSunkenFloor" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "2x2_SmallSunkenFloor" ]]
+[connection signal="pressed" from="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer/SmallSunkenFloor" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "1x1_SmallSunkenFloor" ]]
 [connection signal="pressed" from="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer/SmallSunkenTurnIn" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "1x1_SmallSunkenTurnIn" ]]
 [connection signal="pressed" from="UI/VBoxContainer/TabContainer/1x1 Road blocks/HBoxContainer/SmallFlatBorderless" to="UI/VBoxContainer/TabContainer/2x2 Road blocks" method="set_current_block_by_name" binds= [ "1x1_SmallFlatBorderless" ]]

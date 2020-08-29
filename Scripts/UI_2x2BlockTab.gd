@@ -15,7 +15,8 @@ func _ready():
 
 
 func set_held_block_type(type: int):
-	rootNode.current_hold_block = type
+	#rootNode.current_hold_block = type
+	rootNode.set_current_hold(type, 0)
 
 
 func set_current_block_by_name(tilename: String):
