@@ -13,7 +13,7 @@ var ray_length = 2000
 var grid_size = 2.5
 export var current_hold_block = 9
 export var current_block_rotation = 0
-var disable_non_ui_stuff = false
+var disable_non_ui_stuff = true
 
 func debug(meshlib: MeshLibrary):
 	gridmap_node.clear()
@@ -123,7 +123,7 @@ func _physics_process(_delta):
 	# workaround for the ui event process stuff..
 	# too lazy to find out the right way to deal with event process..
 	if disable_non_ui_stuff:
-		cursor_label.text = "= =||"
+		cursor_label.text = "Press Z to toggle editing mode    = =||"
 		virtual_object.visible = false
 		cursor_object.visible = false
 		return

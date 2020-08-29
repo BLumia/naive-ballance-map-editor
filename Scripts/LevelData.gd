@@ -247,7 +247,7 @@ func export_to_bme_file(filepath: String, offset: Vector2):
 			"[Block]":
 				for layer in layer_blocks:
 					for blk in layer_blocks[layer]:
-						file.store_line("%d,%d,%d,%d,%d,%d" % [blk.type, blk.x + offset_x, blk.y + offset_y, 61, blk.rotation, blk.layer])
+						file.store_line("%d,%d,%d,%d,%d,%d" % [blk.type, blk.x + offset_x, blk.y + offset_y, blk.size, blk.rotation, blk.layer])
 		
 		file.store_line("")
 	file.close()
@@ -329,7 +329,7 @@ func set_level_data_from_gridmap(gridmap: GridMap):
 	var min_y = 0
 	for block in cells:
 		min_x = min_x if min_x < block.x else block.x
-		min_y = min_x if min_y < block.z else block.z
+		min_y = min_y if min_y < block.z else block.z
 		var blk = gridmap_grid_to_bme_grid({
 			"x": block.x,
 			"y": block.z,
