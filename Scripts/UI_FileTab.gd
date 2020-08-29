@@ -37,6 +37,9 @@ func _on_LoadButton_pressed():
 
 func _on_SaveButton_DialogConfirmed(path: String):
 	print(path)
+	var levelData = LevelData.new()
+	var top_left = levelData.set_level_data_from_gridmap(gridmap_node)
+	levelData.export_to_bme_file(path, top_left)
 
 
 func _on_LoadButton_DialogConfirmed(path: String):

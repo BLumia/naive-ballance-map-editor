@@ -101,6 +101,15 @@ func _input(event):
 				current_block_rotation = LevelData.bme_rotation_to_gridmap_rotation(rot)
 				set_current_hold(current_hold_block, current_block_rotation)
 		#get_tree().set_input_as_handled()
+	# ------------------------------------------------------------
+	if Input.is_action_pressed("ui_left"):
+		lookat_point.translate(Vector3(-grid_size, 0, 0))
+	if Input.is_action_pressed("ui_right"):
+		lookat_point.translate(Vector3(grid_size, 0, 0))
+	if Input.is_action_pressed("ui_up"):
+		lookat_point.translate(Vector3(0, 0, -grid_size))
+	if Input.is_action_pressed("ui_down"):
+		lookat_point.translate(Vector3(0, 0, grid_size))
 
 
 func _physics_process(_delta):
@@ -136,15 +145,6 @@ func _physics_process(_delta):
 			set_current_hold_by_arr(tile)
 	if Input.is_action_just_pressed("RMB_click"):
 		gridmap_node.set_cell_item(tile[1].x, tile[1].y, tile[1].z, GridMap.INVALID_CELL_ITEM)
-		
-	if Input.is_action_just_pressed("ui_left"):
-		lookat_point.translate(Vector3(-grid_size, 0, 0))
-	if Input.is_action_just_pressed("ui_right"):
-		lookat_point.translate(Vector3(grid_size, 0, 0))
-	if Input.is_action_just_pressed("ui_up"):
-		lookat_point.translate(Vector3(0, 0, -grid_size))
-	if Input.is_action_just_pressed("ui_down"):
-		lookat_point.translate(Vector3(0, 0, grid_size))
 
 
 # Return if the given grid contains (covered) the given point

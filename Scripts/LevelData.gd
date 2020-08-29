@@ -2,10 +2,10 @@ extends Node
 
 class_name LevelData
 
-var meta_title : String
-var meta_creator : String
+var meta_title : String = "Sophie Twilight"
+var meta_creator : String = "Chris"
 
-var layer_blocks = {} # layer : [ block data]
+var layer_blocks = {} # {layer : [{bme block data 1}, {bme block data 2}, ...]}
 var layer_props = {}
 var valid_regions = ["[Metadata]", "[Sign]", "[Layer]", "[Block]"]
 var bme_typename_map = {
@@ -29,9 +29,49 @@ var bme_typename_map = {
 	16: "1x1_SmallSunkenFloor",
 	17: "1x1_SmallSunkenTurnIn",
 	18: "1x1_SmallSunkenTurnOut",
+	
+	"2x2_PaperTrafo": 1,
+	"2x2_StoneTrafo": 2,
+	"2x2_WoodTrafo": 3,
+	
+	"2x2_Floor_Top_Borderless": 4,
+	"2x2_Floor_Top_Flat": 5,
+	"2x2_Floor_Top_Profil": 6,
+	"2x2_Floor_Top_ProfilFlat": 7,
+	"2x2_NormalFlatTurn": 8,
+	"2x2_NormalBorderTurn": 9,
+	"2x2_NormalSunkenTurn": 10,
+	"2x2_Floor_Top_Border": 11,
+	
+	"1x1_SmallBorderTurn": 12,
+	"1x1_SmallFlatBorder": 13,
+	"1x1_SmallFlatBorderless": 14,
+	"1x1_SmallFlatTurnIn": 15,
+	"1x1_SmallSunkenFloor": 16,
+	"1x1_SmallSunkenTurnIn": 17,
+	"1x1_SmallSunkenTurnOut": 18,
 }
 
 const typename_meshlib_map = {
+	0: "2x2_Floor_Top_Borderless",
+	1: "2x2_NormalFlatTurn",
+	2: "2x2_Floor_Top_Flat",
+	3: "2x2_Floor_Top_ProfilFlat",
+	4: "2x2_NormalBorderTurn",
+	5: "2x2_Floor_Top_Border",
+	6: "2x2_PaperTrafo",
+	7: "2x2_NormalSunkenTurn",
+	8: "2x2_Floor_Top_Profil",
+	9: "2x2_StoneTrafo",
+	10: "2x2_WoodTrafo",
+	11: "1x1_SmallFlatTurnIn",
+	12: "1x1_SmallFlatBorder",
+	13: "1x1_SmallBorderTurn",
+	14: "1x1_SmallFlatBorderless",
+	15: "1x1_SmallSunkenTurnIn",
+	16: "1x1_SmallSunkenFloor",
+	17: "1x1_SmallSunkenTurnOut",
+	
 	"2x2_WoodTrafo": 10,
 	"2x2_StoneTrafo": 9,
 	"2x2_PaperTrafo": 6,
@@ -111,6 +151,9 @@ func parse_from_bme_file(filepath: String):
 	if err != OK:
 		print(err)
 		return false
+	
+	layer_props.clear()
+	layer_blocks.clear()
 
 	while not file.eof_reached():
 		var line = file.get_line()
@@ -176,8 +219,38 @@ func parse_from_bme_file(filepath: String):
 	return !error_encountered
 
 
-func export_to_bme_file(filepath: String):
-	pass
+func export_to_bme_file(filepath: String, offset: Vector2):
+	var file = File.new()
+	var err = file.open(filepath, File.WRITE)
+	if err != OK:
+		print(err)
+		return false
+	
+	var offset_x = (abs(offset.x) + 1) * 20
+	var offset_y = (abs(offset.y) + 1) * 20
+	
+	file.store_line("ballance map format v2")
+	file.store_line("")
+	
+	for region in valid_regions:
+		file.store_line(region)
+		match region:
+			"[Metadata]":
+				file.store_line("Title: %s" % meta_title)
+				file.store_line("Creator: %s" % meta_creator)
+			"[Sign]":
+				pass
+			"[Layer]":
+				for layer in layer_props:
+					var prop = layer_props[layer]
+					file.store_line("%s,%d,%s" % [prop.name, layer, "True"]) # TODO: visible state
+			"[Block]":
+				for layer in layer_blocks:
+					for blk in layer_blocks[layer]:
+						file.store_line("%d,%d,%d,%d,%d,%d" % [blk.type, blk.x + offset_x, blk.y + offset_y, 61, blk.rotation, blk.layer])
+		
+		file.store_line("")
+	file.close()
 
 
 func bme_grid_to_gridmap_grid(layer: int, block: Dictionary):
@@ -205,9 +278,34 @@ func bme_grid_to_gridmap_grid(layer: int, block: Dictionary):
 	}
 
 
+# WARNING! This function doesn't care about offset!
 func gridmap_grid_to_bme_grid(block: Dictionary):
+	var block_name = typename_meshlib_map[block.type]
+	var bme_blk_type = bme_typename_map[block_name]
+	var grid_x = int(block.x)
+	var grid_y = int(block.y)
+	var rotation = gridmap_rotation_to_bme_rotation(block.rotation)
+	if block_name.begins_with("2x2_"):
+		match rotation:
+			90:
+				grid_x -= 1
+			180:
+				grid_x -= 1
+				grid_y -= 1
+			270:
+				grid_y -= 1
+
+	grid_x = grid_x * 20 + 1
+	grid_y = grid_y * 20 + 1
+
+	var grid_layer = int(block.layer)
+
 	return {
-		# TODO
+		"layer": grid_layer,
+		"type": bme_blk_type,
+		"x": grid_x,
+		"y": grid_y,
+		"rotation": rotation
 	}
 
 
@@ -219,9 +317,34 @@ func set_gridmap_from_level_data(gridmap: GridMap):
 	for layer in layer_blocks:
 		for block in layer_blocks[layer]:
 			var blk = bme_grid_to_gridmap_grid(layer, block)
-			print(blk)
+			#print(blk)
 			gridmap.set_cell_item(blk.x - canvas_offset, blk.layer, blk.y - canvas_offset, blk.type, blk.rotation)
 
 
-func set_level_data_from_gridmap():
-	pass
+# return the top-left corner so we can apply offset when exporting to bme.
+func set_level_data_from_gridmap(gridmap: GridMap):
+	var cells = gridmap.get_used_cells()
+	var min_x = 0
+	var min_y = 0
+	for block in cells:
+		min_x = min_x if min_x < block.x else block.x
+		min_y = min_x if min_y < block.z else block.z
+		var blk = gridmap_grid_to_bme_grid({
+			"x": block.x,
+			"y": block.z,
+			"layer": block.y,
+			"rotation": gridmap.get_cell_item_orientation(block.x, block.y, block.z),
+			"type": gridmap.get_cell_item(block.x, block.y, block.z)
+		})
+		if !layer_blocks.has(blk.layer):
+			layer_blocks[blk.layer] = []
+		var layer_arr = layer_blocks[blk.layer]
+		layer_arr.append(blk)
+
+	for key in layer_blocks.keys():
+		layer_props[key] = {
+			"name": "Layer " + String(key),
+			"visible": "True", # TODO: string to bool
+		}
+	
+	return Vector2(min_x, min_y)

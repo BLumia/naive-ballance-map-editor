@@ -62,7 +62,7 @@ __meta__ = {
 [node name="LookAtPoint" type="Spatial" parent="."]
 
 [node name="Camera" type="Camera" parent="LookAtPoint"]
-transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 35, 10 )
+transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 50, 15 )
 
 [node name="CurrentSurface" type="Area" parent="LookAtPoint"]
 
@@ -103,6 +103,7 @@ __meta__ = {
 }
 
 [node name="File" type="Tabs" parent="UI/VBoxContainer/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -131,7 +132,6 @@ __meta__ = {
 margin_left = 46.0
 margin_right = 87.0
 margin_bottom = 44.0
-disabled = true
 text = "Save"
 flat = false
 __meta__ = {
@@ -246,6 +246,7 @@ texture_normal = ExtResource( 11 )
 expand = true
 
 [node name="1x1 Road blocks" type="Tabs" parent="UI/VBoxContainer/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
